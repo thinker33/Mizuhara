@@ -509,7 +509,7 @@ arus.sendMessage(m.chat, {sticker: buffer}, {quoted: m})
 
  }
  break
-    case 'profile':
+    case 'profile': case 'p':
 const userw = await Levels.fetch(m.sender, "bot");
 				        const levelRole = userw.level
         var role = 'Warrior'
@@ -669,7 +669,7 @@ m.reply("An Error Occurred")
 		
 //////////////////////////GROUP\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-    case 'kick': {
+    case 'remove': case 'sayonara': case 'tata': case 'bye': case '🏴‍☠️': {
 					if (!m.isGroup) return m.reply("Sorry its a group command.Couldn't process the request!")
 if (!isAdmins) return m.reply("❌ This is an Admin only Command")
 if (!isBotAdmins) return m.reply("❌ Cannot execute without being admin")
@@ -736,6 +736,7 @@ if (!isBotAdmins) return m.reply("❌ Cannot execute without being admin")
                 break 
 case 'tagall':
 case 'ping':
+case 'all':
   
 if (!m.isGroup) return m.reply("Sorry its a group command.Couldn't process the request!")
 if (!isAdmins) return m.reply("❌ This is an Admin only Command")
@@ -976,7 +977,7 @@ return m.reply("❌ Couldn't find any userID in context")
   break
 //////////////////////////YOUTUBE\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-case  'play': case 'ytplay': {
+case  'play': case 'ytplay':  case 'song':  case 'music': {
     if (!ter) return m.reply(`❌ No query provided!`)
     let yts = require("yt-search")
 let { yta  } = require('./lib/y2mate')
