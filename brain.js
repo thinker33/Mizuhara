@@ -171,12 +171,13 @@ case '':
 
 
     const dbut = [
-{buttonId: `${prefix}help`, buttonText: {displayText: 'Commands'}, type: 1},
-{buttonId: `${prefix}info`, buttonText: {displayText: 'Bot status'}, type: 1}
+{buttonId: `${prefix}help`, buttonText: {displayText: '🚀Commands'}, type: 1},
+{buttonId: `${prefix}info`, buttonText: {displayText: '🎐Bot status'}, type: 1}
 ]
 let buttonMessaged = {
-        text: `Hey *${pushname}* I am ${name}. Do you mean: ${prefix}help`,
-        footer: '@ARUS',
+        image: {url:"https://telegra.ph/file/2e9e255eb80abbde0f001.jpg"},
+        caption: `*Kon'nichiwa ${pushname} Did You Mean ${prefix}help ?*`,
+        footer: '©Arus 2022',
         buttons: dbut,
         headerType: 4
     }
@@ -204,7 +205,7 @@ break
         return ' ' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs)
     }
 	    const dbut = [
-{buttonId: `${prefix}help`, buttonText: {displayText: 'Commands'}, type: 1}
+{buttonId: `${prefix}help`, buttonText: {displayText: '🍁Commands🍁'}, type: 1}
 ]
     const uptime = process.uptime()
 	let tr = await user.countDocuments()
@@ -213,11 +214,11 @@ break
                 let anu = groups.map(v => v.id)
 	let ur = anu.length
 	let b = await user.countDocuments({ ban : "true" })
-let ter = `🧧 *Commands*: 55\n🔧 *Users*: ${tr}\n💚 *Groups*: ${ur}\n🚫 *Ban_Users*: ${b}\n⛩ *Moderators*: ${owner.length}`
+let ter = `📚 *Commands*: 55\n👥 *Users*: ${tr}\n🔰 *Groups*: ${ur}\n🚫 *Ban_Users*: ${b}\n⛩ *Moderators*: ${owner.length}`
 console.log(ter)
    let buttonMessaged = {
         text: ter,
-        footer: '@ARUS',
+        footer: '©ARUS',
         buttons: dbut,
         headerType: 4
     }
@@ -240,9 +241,51 @@ console.log(err)
 break
 		   case "h":
 		   case "help":
-		   case 'menu':{ 
-			     arus.sendMessage(m.chat, { text: menu, contextInfo:{"externalAdReply": {"title": `WhatsApp-Botto`,"body": `𝐌𝐢𝐳𝐮𝐡𝐚𝐫𝐚`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": await getBuffer("https://i.pinimg.com/736x/01/bd/31/01bd31fb1b185e38d9f605b0f8f16b90.jpg"),"sourceUrl": "https://kanojo-okarishimasu.fandom.com/wiki/Chizuru_Ichinose"}}}, { quoted: m})
- }
+                   case 'menu':
+                   const hlp=`
+*(❤️ω❤️)Kon'nichiwa 👋🏻 watashiwa ${pushname} Darling I'm Mizuhara*
+
+📝Note: if Bot did not responding then it's offline or owner internet issue so please wait until Bot comes online.!
+
+🎐My Prefix is:- ${prefix}
+
+⭐ 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 𝐋𝐈𝐒𝐓 ⭐
+
+━━━━『🍁Dev🍁』━━━━
+❐ update, broadcast, ban, unban, chatid, join, session
+
+━━━『🍀General🍀』━━━
+❐ help, delete, info, rank, profile
+
+━━━━『💫Fun💫』━━━━
+❐ ship, advice, quote, leaderboard, react, fact, bot
+
+━━━『🎉Media🎉』━━━
+❐ yta, ytv, play, gify, yts, lyrics
+
+━━━『🔰Moderation🔰』━━━
+❐ demote, remove, ping, promote, deact, act, invite, group, seticon, setdesc
+
+━━━『🏮Weeb🏮』━━━
+❐ anime, manga, charecter, haigusha, neko, waifu, pokemon
+
+━━━━『💻Utils💻』━━━━
+❐ google, image, meme, subreddit, tourl, img, iguser, gif, sticker, take, pinterest, carbon
+
+ 🎐 𝙋𝙤𝙬𝙚𝙧𝙚𝙙 𝙗𝙮 𝘼𝙧𝙪𝙨 🎐`			     
+const hhbut = [
+{buttonId: '=info', buttonText: {displayText: '📥Info'}, type: 1},
+{buttonId: '=profile', buttonText: {displayText: '⭐Profile'}, type: 1}
+]
+let hbutto = {
+        file: arus.sendMessage(m.chat,{video:fs.readFileSync('./src/help.mp4'),gifPlayback:true,caption:hlp},{quoted:m}),
+        caption: hlp,
+        footer: '©Arus 2022',
+        buttons: hhbut,
+        headerType: 4
+    }
+arus.sendMessage(m.chat,hbutto,{quoted:m})
+
 			   break
 		   case 'session': {
 			   if (!isCreator) return m.reply("📍The user of this command must be the owner of the bot")
@@ -1345,8 +1388,7 @@ case 'pat':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1378,8 +1420,7 @@ case 'hug':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1411,8 +1452,7 @@ case 'kiss':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1444,8 +1484,7 @@ case 'slap':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1477,8 +1516,7 @@ case 'cuddle':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1510,8 +1548,7 @@ case 'kick':{
 		let usep = m.sender
 let recp=``
 try {
-      let mention = mentionByTag
-      let users = await (mention[0]) || m.msg.contextInfo.participant
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 
  ment=[usep,users]
 } catch {
@@ -1536,7 +1573,7 @@ console.log(recp)
         console.log(error);
     }
 }
-break 
+break
  case 'waifu': {
                let waifud = await axios.get('https://waifu.pics/api/sfw/waifu')
  arus.sendMessage(m.chat, { image: { url: waifud.data.url }, caption: "Here you go" }, { quoted: m })
@@ -1727,7 +1764,7 @@ break
                 for (let i of anu) {
                     //await sleep(1500)
 
-  let txt = `🔰</ _*Arus Broadcast*_ >🔰\n\n🍀 *Author:* ${pushname}\n\n🔖 *Message:* ${bct}`
+  let txt = `🔰</ _*Arus Broadcast*_ >🔰\n\n🍀 *Author:* ${pushname}\n\n🏮 *Message:* ${bct}`
 //const stick=fs.readFileSync(`./src/right.webp`)
 //await arus.sendMessage(m.chat,{sticker:stick},{quoted:m})
 await arus.sendMessage(i, { video: { url: "https://telegra.ph/file/3c3f94c8463e7f9c29d73.mp4" }, mimetype: 'video/mp4', fileName: `bc.mp4`, caption: `${txt}` })
