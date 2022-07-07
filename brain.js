@@ -1040,6 +1040,27 @@ m.reply(`🕣 Downloading ${ter}`)
 	
 }
 break
+
+case  'vplay': case 'video':  case 'vsong': {
+    if (!ter) return m.reply(`❌ No query provided!`)
+    let yts = require("yt-search")
+let { ytv  } = require('./lib/y2mate')
+m.reply(`🕣 Downloading ${ter}`)
+    let search = await yts(ter)
+    let quality = '360p'
+    let media = await ytv(search.all[0].url, quality)
+	arus.sendMessage(m.chat, { audio: { url: media.dl_link }, contextInfo: {
+                    externalAdReply: {
+                        title: search.all[0].title.substr(0, 30),
+                        body: `author : ${search.all[0].author.name.substr(0, 20)}`,
+                        mediaType: 2,
+                        thumbnail: await getBuffer(`https://i.ytimg.com/vi/${search.all[0].videoId}/hqdefault.jpg`),
+                        mediaUrl: media.url
+                    }
+                }, mimetype: 'video/mp4', fileName: `${search.all[0].title}.mp4` }, { quoted: m})
+	
+}
+break
 case 'ytmp3': case 'ytaudio': case 'yta': {
     let { yta  } = require('./lib/y2mate')
     if (!ter) return m.reply(`❌ No query provided!`)
