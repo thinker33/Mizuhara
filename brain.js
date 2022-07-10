@@ -35,10 +35,8 @@ const hxz = require("hxz-api")
 const cheerio = require('cheerio')
 const msgFilter= require('./lib/msgFilter.js')
 const { Chalk } = require("cfonts/lib/Chalk")
-const { Doujin } = require("@shineiichijo/nhentai-pdf")
 const { tmpdir } = require("os");
-const { readFile } = require ("fs/promises")
-const nHentai = require("shentai")                              
+const { readFile } = require ("fs/promises")                              
 const db = require('quick.db')
 module.exports = arus = async (arus, m, chatUpdate, store) => {
     try {
