@@ -143,7 +143,7 @@ async function startArus() {
 		// implement to handle retries
 		getMessage: async key => {
 			return {
-				conversation: 'hello'
+				conversation: key
 			}
 		}
     })
