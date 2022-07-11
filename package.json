@@ -19,7 +19,7 @@
   "author": "Pratyush.",
   "license": "MIT",
   "dependencies": {
-    "@adiwajshing/baileys": "github:adiwajshing/Baileys#a75d9118bdc7829a12dcb5f758dc5f92528a272d",
+    "@adiwajshing/baileys": "^4.1.0",
     "@adiwajshing/keyed-db": "^0.2.4",
     "@canvas-fonts/arial-bold": "^1.0.4",
     "@shineiichijo/canvas-chan": "^1.0.0",
