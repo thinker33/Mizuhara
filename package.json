@@ -16,7 +16,7 @@
     "baileys-md",
     "bot"
   ],
-  "author": "Arus-Team",
+  "author": "Team-Arus",
   "license": "AGPL-3.0",
   "dependencies": {
     "@adiwajshing/baileys": "^4.1.0",
