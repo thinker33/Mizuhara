@@ -19,7 +19,7 @@
   "author": "Team-Arus",
   "license": "AGPL-3.0",
   "dependencies": {
-    "@adiwajshing/baileys": "^4.1.0",
+    "@adiwajshing/baileys": "github:adiwajshing/baileys",
     "@adiwajshing/keyed-db": "^0.2.4",
     "@canvas-fonts/arial-bold": "^1.0.4",
     "@shineiichijo/canvas-chan": "^1.0.0",

@@ -136,11 +136,11 @@ async function startArus() {
     const arus = arusConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
-        browser: ['Mizuhara','Safari','1.0.1'],
+        browser: ['Mizuhara', 'Safari', '1.0.1'],
         auth: state,
-        version: getVersionWaweb() || [2, 2204, 13],
-        
+        version: getVersionWaweb() || [2, 2204, 13]
     })
+
 
     store.bind(arus.ev)
 
