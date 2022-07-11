@@ -139,13 +139,7 @@ async function startArus() {
         browser: ['Mizuhara','Safari','1.0.1'],
         auth: state,
         version: getVersionWaweb() || [2, 2204, 13],
-        msgRetryCounterMap,
-		// implement to handle retries
-		getMessage: async key => {
-			return {
-				conversation: key
-			}
-		}
+        
     })
 
     store.bind(arus.ev)
