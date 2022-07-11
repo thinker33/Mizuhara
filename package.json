@@ -1,6 +1,6 @@
 {
   "name": "mizuhara",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "WhatsApp Using Lib Baileys Multi Device",
   "main": "heart.js",
   "type": "commonjs",
@@ -16,8 +16,8 @@
     "baileys-md",
     "bot"
   ],
-  "author": "Pratyush.",
-  "license": "MIT",
+  "author": "Arus-Team",
+  "license": "AGPL-3.0",
   "dependencies": {
     "@adiwajshing/baileys": "^4.1.0",
     "@adiwajshing/keyed-db": "^0.2.4",
