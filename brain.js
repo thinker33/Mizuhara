@@ -7,6 +7,7 @@ const { exec, spawn, execSync } = require("child_process")
 const axios = require('axios')
 const path = require('path')
 const os = require('os')
+const ytdl = require('ytdl-core')
 const { Character } = require('mailist')
 const moment = require('moment-timezone')
 const usere = JSON.parse(fs.readFileSync('./lib/user.json'))
@@ -989,6 +990,7 @@ return m.reply("❌ Couldn't find any userID in context")
 	}
   break
 
+
    case 'unban':{
 	   if (!isCreator) return m.reply("📍The user of this command must be the owner of the bot")
 		   try {
@@ -1037,44 +1039,110 @@ m.reply(`🕣 Downloading ${ter}`)
 }
 break
 case 'ytmp3': case 'ytaudio': case 'yta': {
-    let { yta  } = require('./lib/y2mate')
-    if (!ter) return m.reply(`❌ No query provided!`)
-		if (!isUrl(ter) && !ter.includes('https://youtube.com.com')) return m.reply("🔍 Please provide the youtube link")
-   m.reply(`🕣 Downloading ${ter}`)
-    var search = await yts(ter)
-    //console.log(search)
-    // anu = search.videos[Math.floor(Math.random() * search.videos.length)]
-    search=search.all
-    let quality = args[1] ? args[1] : '128kbps'
-    let media = await yta(ter, quality)
-    if (media.filesize >= 100000) return m.reply("🕐 Can not fetch audio longer than *10 Minutes*")
-    const ycp=`*📓Title* : ${search[0].title}
-*🎤Type* : MP3
-*🎬Description* : ${search[0].description}
-*🌐Link* : ${ter}`
-arus.sendMessage(m.chat,{image:{url:search[0].thumbnail},caption:ycp},{quoted:m,})
-arus.sendMessage(m.chat, { audio: { url: media.dl_link }, contextInfo: {
-                    externalAdReply: {
-                        title: search[0].title.substr(0, 30),
-                        body: `author : ${search[0].author.name.substr(0, 20)}`,
-                        mediaType: 2,
-                        thumbnail: await getBuffer(`https://i.ytimg.com/vi/${search[0].videoId}/hqdefault.jpg`),
-                        mediaUrl: media.url
-                    }
-                }, mimetype: 'audio/mpeg', fileName: `${search[0].title}.mp3` }, { quoted: m})
-}
-break
-case 'ytmp4': case 'ytvideo': case 'ytv': {
-    let { ytv } = require('./lib/y2mate')
-    if (!ter) return m.reply(`❌ No query provided!`)
-				if (!isUrl(ter) && !ter.includes('https://youtube.com.com')) return m.reply("🔍 Please provide the youtube link")
-					m.reply(`🕣 Downloading ${ter}`)
-    let quality = '360p'
-    let media = await ytv(ter, quality)
-    if (media.filesize >= 100000) return m.reply("🕐 Can not fetch audio longer than *10 Minutes*")
-
-arus.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `🌸 *Title* : ${media.title}\n🎗️ *File Size* : ${media.filesizeF}\n📓 *Url* : ${ter}\n📌 *Ext* : MP3\n` }, { quoted: m })
-}
+    const getRandom = (ext) => {
+        return `${Math.floor(Math.random() * 10000)}${ext}`;
+      };
+        if (args.length === 0) {
+          reply(`❌ URL is empty! \nSend ${prefix}yta url`);
+          return;
+        }
+        let urlYt = args[0];
+        if (!urlYt.startsWith("http")) {
+          reply(`❌ Give youtube link!`);
+          return;
+        }
+        let infoYt = await ytdl.getInfo(urlYt);
+        //30 MIN
+        if (infoYt.videoDetails.lengthSeconds >= 1800) {
+          reply(`❌ Video too big!`);
+          return;
+        }
+        let titleYt = infoYt.videoDetails.title;
+        let randomName = getRandom(".mp3");
+      
+        const stream = ytdl(urlYt, {
+          filter: (info) => info.audioBitrate == 160 || info.audioBitrate == 128,
+        }).pipe(fs.createWriteStream(`./${randomName}`));
+        console.log("Audio downloading ->", urlYt);
+        // reply("Downloading.. This may take upto 5 min!");
+        await new Promise((resolve, reject) => {
+          stream.on("error", reject);
+          stream.on("finish", resolve);
+        });
+      
+        let stats = fs.statSync(`./${randomName}`);
+        let fileSizeInBytes = stats.size;
+        // Convert the file size to megabytes (optional)
+        let fileSizeInMegabytes = fileSizeInBytes / (1024 * 1024);
+        console.log("Audio downloaded ! Size: " + fileSizeInMegabytes);
+        if (fileSizeInMegabytes <= 40) {
+          arus.sendMessage(
+             m.chat,
+            {
+              document: fs.readFileSync(`./${randomName}`),
+              fileName: titleYt + ".mp3",
+              mimetype: "audio/mpeg",
+            },
+            { quoted:m }
+          );
+        } else {
+          reply(`❌ File size bigger than 40mb.`);
+        }
+       fs.unlinkSync(`./${randomName}`);
+    }
+break 
+case 'ytmp4': case 'ytvideo': case 'ytv' :
+    const getRandom = (ext) => {
+        return `${Math.floor(Math.random() * 10000)}${ext}`;
+      };
+        if (args.length === 0) {
+          m.reply(`❌ URL is empty! \nSend ${prefix}ytv url`);
+          return;
+        }
+        let urlYt = args[0];
+        if (!urlYt.startsWith("http")) {
+          m.reply(`❌ Give youtube link!`);
+          return;
+        }
+        let infoYt = await ytdl.getInfo(urlYt);
+        //30 MIN
+        if (infoYt.videoDetails.lengthSeconds >= 1800) {
+          m.reply(`❌ Video file too big!`);
+          return;
+        }
+        let titleYt = infoYt.videoDetails.title;
+        let randomName = getRandom(".mp4");
+      
+        const stream = ytdl(urlYt, {
+          filter: (info) => info.itag == 22 || info.itag == 18,
+        }).pipe(fs.createWriteStream(`./${randomName}`));
+        //22 - 1080p/720p and 18 - 360p
+        console.log("Video downloading ->", urlYt);
+        // reply("Downloading.. This may take upto 5 min!");
+        await new Promise((resolve, reject) => {
+          stream.on("error", reject);
+          stream.on("finish", resolve);
+        });
+      
+        let stats = fs.statSync(`./${randomName}`);
+        let fileSizeInBytes = stats.size;
+        // Convert the file size to megabytes (optional)
+        let fileSizeInMegabytes = fileSizeInBytes / (1024 * 1024);
+        console.log("Video downloaded ! Size: " + fileSizeInMegabytes);
+        if (fileSizeInMegabytes <= 100) {
+          arus.sendMessage(
+            m.chat,
+            {
+              video: fs.readFileSync(`./${randomName}`),
+              caption: `${titleYt}`,
+            },
+            { quoted: m }
+          );
+        } else {
+          m.reply(`❌ File size bigger than 40mb.`);
+        }
+      
+        fs.unlinkSync(`./${randomName}`);
 break
 case 'yts': case 'ytsearch': {
     if (!ter) return m.reply(`❌No query provided!`)
@@ -1107,6 +1175,15 @@ case 'meme':{
 	const response = await axios.get('https://meme-api.herokuapp.com/gimme/wholesomeanimemes');
 	const { title, url } = response.data
 	arus.sendMessage(m.chat,{image:{url:url},caption:`*${title}*`},{quoted:m,})
+}
+break
+case 'add': {
+    if (!m.isGroup) m.reply(mess.group)
+            if (!isBotAdmins) m.reply(mess.botAdmin)
+            if (!isAdmins) return m.reply(mess.admin)
+    let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+    await arus.groupParticipantsUpdate(m.chat, [users], 'add')
+    arus.sendMessage(m.chat,{text:`Added @${users.split("@")[0]} successfuly `,contextInfo: { mentionedJid: [users] }})
 }
 break
 case 'join': {
