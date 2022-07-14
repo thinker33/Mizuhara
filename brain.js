@@ -276,7 +276,7 @@ const hhbut = [
 {buttonId: '=profile', buttonText: {displayText: '⭐Profile'}, type: 1}
 ]
 let hbutto = {
-        file: arus.sendMessage(m.chat,{video:fs.readFileSync('./src/help.mp4'),gifPlayback:true,caption:hlp},{quoted:m}),
+        file: arus.sendMessage(m.chat,{video:fs.readFileSync('./trash/help.mp4'),gifPlayback:true,caption:hlp},{quoted:m}),
         caption: hlp,
         footer: '©Arus 2022',
         buttons: hhbut,
@@ -1153,7 +1153,7 @@ case 'yts': case 'ytsearch': {
     for (let i of search.all) {
         teks += `*#${no++}*\n🏜️ *Title*: ${i.title}\n🌸 *Duration*: ${i.timestamp}\n🌐 *Url*: ${i.url}\n`
     }
-    arus.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },jpegThumbnail:fs.readFileSync('./src/yts.jpg'),  caption: teks, }, { quoted: m, })
+    arus.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },jpegThumbnail:fs.readFileSync('./trash/yts.jpg'),  caption: teks, }, { quoted: m, })
 }
 break
 case 'sr':
@@ -1170,6 +1170,20 @@ case 'subraddit': {
 
 				
 }
+break
+
+case 'spank': case 'ngif':
+    let soank = await group.findOne({ id: m.chat})
+let sk = soank.nsfw || "false"
+const spankd = await axios.get(`https://nekos.life/api/v2/img/${command}`)
+var spbuff = await getBuffer(spankd.data.url)
+var spgif = await GIFBufferToVideoBuffer(spbuff)   
+
+if (spankd.data.nsfw&& sk == 'false') return m.reply("❌ *nsfw* is not active in this group")
+
+await arus.sendMessage(m.chat,{video: spgif, gifPlayback:true},{ quoted:m }).catch(err => {
+                    return m.reply('error..')
+                                    })
 break
 case 'meme':{
 	const response = await axios.get('https://meme-api.herokuapp.com/gimme/wholesomeanimemes');
@@ -1838,7 +1852,7 @@ break
                     //await sleep(1500)
 
   let txt = `🔰</ _*Arus Broadcast*_ >🔰\n\n🍀 *Author:* ${pushname}\n\n🏮 *Message:* ${bct}`
-//const stick=fs.readFileSync(`./src/right.webp`)
+//const stick=fs.readFileSync(`./trash/right.webp`)
 //await arus.sendMessage(m.chat,{sticker:stick},{quoted:m})
 await arus.sendMessage(i, { video: { url: "https://telegra.ph/file/3c3f94c8463e7f9c29d73.mp4" }, mimetype: 'video/mp4', fileName: `bc.mp4`, caption: `${txt}` })
                     }
