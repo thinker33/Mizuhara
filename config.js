@@ -16,7 +16,7 @@ global.port = process.env.PORT || 8080;
   (global.author = process.env.AUTHOR || "ARUS"),
   (global.sessionName = "arus"),
   (global.name = process.env.NAME || "Mizuhara"),
-  (global.thumb = fs.readFileSync("./src/info.jpeg"));
+  (global.thumb = fs.readFileSync("./trash/info.jpeg"));
 
 let file = require.resolve(__filename);
 fs.watchFile(file, () => {

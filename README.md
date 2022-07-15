@@ -49,6 +49,7 @@
 * [Node.js](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads)
 * [FFmpeg](https://ffmpeg.org/download.html)
+* [ImageMagick](https://imagemagick.org/script/download.php)
 
 ## HEROKU
 

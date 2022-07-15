@@ -1,6 +1,6 @@
 require('./config')
 require('./brain.js')
-const { default: arusConnect, useSingleFileAuthState, DisconnectReason, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@adiwajshing/baileys")
+const { default: arusConnect, useSingleFileAuthState, DisconnectReason, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore,MessageRetryMap, jidDecode, proto } = require("@adiwajshing/baileys")
 const pino = require('pino')
 const fs = require('fs')
 const chalk = require('chalk')
@@ -121,6 +121,7 @@ const getVersionWaweb = () => {
 }
 const PORT = port
 const app = express();
+const msgRetryCounterMap=MessageRetryMap
 let QR_GENERATE = "invalid";
 async function startArus() {
     await fetchauth();
@@ -135,10 +136,11 @@ async function startArus() {
     const arus = arusConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
-        browser: ['Mizuhara', 'Safari', '1.0.0'],
+        browser: ['Mizuhara', 'Safari', '1.0.1'],
         auth: state,
         version: getVersionWaweb() || [2, 2204, 13]
     })
+
 
     store.bind(arus.ev)
 
@@ -653,7 +655,7 @@ async function startArus() {
             mime: 'application/octet-stream',
             ext: '.bin'
         }
-        filename = path.join(__filename, '../src/' + new Date * 1 + '.' + type.ext)
+        filename = path.join(__filename, '../trash/' + new Date * 1 + '.' + type.ext)
         if (data && save) fs.promises.writeFile(filename, data)
         return {
             res,
