@@ -1079,7 +1079,7 @@ case 'ytmp3': case 'ytaudio': case 'yta': {
           arus.sendMessage(
              m.chat,
             {
-              document: fs.readFileSync(`./${randomName}`),
+              audio: fs.readFileSync(`./${randomName}`),
               fileName: titleYt + ".mp3",
               mimetype: "audio/mpeg",
             },
