@@ -272,8 +272,8 @@ break
 
  🎐 𝙋𝙤𝙬𝙚𝙧𝙚𝙙 𝙗𝙮 𝘼𝙧𝙪𝙨 🎐`			     
 const hhbut = [
-{buttonId: '=info', buttonText: {displayText: '📥Info'}, type: 1},
-{buttonId: '=profile', buttonText: {displayText: '⭐Profile'}, type: 1}
+{buttonId: `{prefix}info`, buttonText: {displayText: '📥Info'}, type: 1},
+{buttonId: `prefix}profile`, buttonText: {displayText: '⭐Profile'}, type: 1}
 ]
 let hbutto = {
         file: arus.sendMessage(m.chat,{video:fs.readFileSync('./trash/help.mp4'),gifPlayback:true,caption:hlp},{quoted:m}),
