@@ -634,7 +634,7 @@ let disec = m.sender.substring(3, 7)
 					tex += `\n*🚥Group*: ${groupName}\n\n`
 				}
 				if (isAdmins) {
-					tex += `*♨️Admim*: true\n`
+					tex += `*♨️Admin*: true\n`
 				}
 				arus.sendMessage(m.chat, { image: { url: ppuser }, caption: tex }, { quoted: m })
 break
