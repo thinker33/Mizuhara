@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
-id: { type: String, require: true, unique: true },
+id: { type: String, required: true, unique: true },
 name: { type: String },
 ban: { type: String},
 bot: { type: Boolean},
