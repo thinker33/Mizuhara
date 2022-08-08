@@ -793,6 +793,24 @@ for (let memNum of participants) {
 }
 arus.sendMessage(m.chat,{text:menText,mentions: participants.map(a => a.id)},{quoted:m})
 break
+case 'admins':
+case 'suno':
+case 'oioi':
+  
+if (!m.isGroup) return m.reply("Sorry its a group command.Couldn't process the request!")
+if (!isAdmins) return m.reply("❌ This is an Admin only Command")
+if (!isBotAdmins) return m.reply("❌ Cannot execute without being admin")
+if(q) { var Text =`📌 *Message - ${q}*\n*🍁 Group name - ${groupName}*` } else {  var Text = `*${groupName}*`}
+
+let menText = `${Text}\n*💫 ping by - ${pushname}*\n*🕛 time - ${time}*\n\n`
+ {
+    
+    if( groupAdmins.includes(memNum.id) === true ) { var emo = '👑'} else { var emo = '❄️'} 
+    menText += `${emo} *@${memNum.id.split('@')[0]}*\n`
+    //members_id.push(memNum.jid)
+}
+arus.sendMessage(m.chat,{text:menText,mentions: groupAdmins.map(a => a.id)},{quoted:m})
+break
 
  
   case 'group': {
